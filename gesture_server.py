@@ -1,0 +1,39 @@
+import cv2, mediapipe as mp, asyncio, websockets, json, math
+
+mp_hands = mp.solutions.hands
+hands = mp_hands.Hands(max_num_hands=2)
+
+cap = cv2.VideoCapture(0)
+
+def finger_extended(tip, pip):
+    return tip.y < pip.y
+
+def detect_fire_jutsu(hand):
+    lm = hand.landmark
+    index = finger_extended(lm[8], lm[6])
+    middle = finger_extended(lm[12], lm[10])
+    ring = finger_extended(lm[16], lm[14])
+    pinky = finger_extended(lm[20], lm[18])
+    return index and middle and not ring and not pinky
+
+async def handler(ws):
+    while True:
+        _, frame = cap.read()
+        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        res = hands.process(rgb)
+
+        event = "NONE"
+
+        if res.multi_hand_landmarks:
+            for hand in res.multi_hand_landmarks:
+                if detect_fire_jutsu(hand):
+                    event = "FIRE_JUTSU"
+
+        await ws.send(json.dumps({"event": event}))
+        await asyncio.sleep(0.03)
+
+async def main():
+    async with websockets.serve(handler, "localhost", 8765):
+        await asyncio.Future()
+
+asyncio.run(main())
