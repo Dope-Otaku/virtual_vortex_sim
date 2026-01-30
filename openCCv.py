@@ -7,10 +7,10 @@ image = cv2.imread('pop_kaal.jpg', 1)
 # print(image.shape)
 
 if image is not None:
-    h, w, c = image.shape
+    resizedImage = cv2.resize(image, (400,400))
+    h, w, c = resizedImage.shape
     print(f"Height: {h}\nWidth: {w}\nColor Channel: {c}")
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    cv2.imshow("Grayscale version", gray)
+    cv2.imshow("resized image", resizedImage)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 else:
