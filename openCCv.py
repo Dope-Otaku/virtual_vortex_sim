@@ -17,8 +17,10 @@ if image is not None:
     # print(f"Height: {h}\nWidth: {w}\nColor Channel: {c}")
     m = cv2.getRotationMatrix2D(center,90,1.0)
     rotatedImage = cv2.warpAffine(image, m, (w,h))
+    flippedImage = cv2.flip(rotatedImage, -1)
     cv2.imshow("original image", image)
     cv2.imshow("rotated image", rotatedImage)
+    cv2.imshow("flipped image", flippedImage)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 else:
