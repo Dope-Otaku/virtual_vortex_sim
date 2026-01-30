@@ -10,12 +10,13 @@ if image is not None:
     # resizedImage = cv2.resize(image, (400,400))
     # cropped = image[300:900, 500:1040]
     # h, w, c = image.shape
-    h = image.shape[0]//2
-    w = image.shape[1]//2
+    h = image.shape[0]
+    w = image.shape[1]
+    center = (w//2, h//2)
     # print(h, w)
     # print(f"Height: {h}\nWidth: {w}\nColor Channel: {c}")
-    m = cv2.getRotationMatrix2D((w,h),90,1.0)
-    rotatedImage = cv2.warpAffine(image, m, (3360,2100))
+    m = cv2.getRotationMatrix2D(center,90,1.0)
+    rotatedImage = cv2.warpAffine(image, m, (w,h))
     cv2.imshow("original image", image)
     cv2.imshow("rotated image", rotatedImage)
     cv2.waitKey(0)
