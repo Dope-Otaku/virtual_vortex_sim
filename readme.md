@@ -15,5 +15,9 @@
 *** [3a] - WebSocket (python -> browser)
 
 
+# Steps to run this project
+- [] -> python3 -m venv Main
+- [] -> source Main/bin/activate
+- [] -> deactivate
 
 
