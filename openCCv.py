@@ -8,11 +8,16 @@ image = cv2.imread('pop_kaal.jpg', 1)
 
 if image is not None:
     # resizedImage = cv2.resize(image, (400,400))
-    cropped = image[300:900, 500:1040]
-    h, w, c = cropped.shape
-    print(f"Height: {h}\nWidth: {w}\nColor Channel: {c}")
+    # cropped = image[300:900, 500:1040]
+    # h, w, c = image.shape
+    h = image.shape[0]//2
+    w = image.shape[1]//2
+    # print(h, w)
+    # print(f"Height: {h}\nWidth: {w}\nColor Channel: {c}")
+    m = cv2.getRotationMatrix2D((w,h),90,1.0)
+    rotatedImage = cv2.warpAffine(image, m, (3360,2100))
     cv2.imshow("original image", image)
-    cv2.imshow("cropped image", cropped)
+    cv2.imshow("rotated image", rotatedImage)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 else:
