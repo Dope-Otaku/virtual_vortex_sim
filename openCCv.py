@@ -2,7 +2,7 @@ import cv2
 
 
 image = cv2.imread("pop_kaal.jpg")
-blurred_image = cv2.GaussianBlur(image, (7,7), 11)
+blurred_image = cv2.medianBlur(image, 21)
 
 if image is None:
     print("no image found")
