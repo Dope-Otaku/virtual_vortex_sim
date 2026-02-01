@@ -1,39 +1,24 @@
 import cv2
-import numpy as np
+face_classifier = cv2.CascadeClassifier("haarcascade_frontalcatface.xml")
 
-image = cv2.imread("tri.png")
-gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+cap = cv2.VideoCapture(0)
 
-_, thresh = cv2.threshold(gray, 240, 255, cv2.THRESH_BINARY)
+while True:
 
+    ret, frames = cap.read()
 
-contours, heirarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    gray = cv2.cvtColor(frames, cv2.COLOR_BGR2GRAY)
 
-if not contours:
-    print("countours failed to run")
+    detect_face = face_classifier.detectMultiScale(gray, 1.1, 5)
 
-cv2.drawContours(image, contours, -1, 0xfff, 3)
-    
-for contour in contours:
-    approx = cv2.approxPolyDP(contour, (0.01*cv2.arcLength(contour, True)), True)
-    corners=len(approx)
+    for (x, y, w, h) in detect_face:
+        cv2.rectangle(frames, (x,y), (x+w, y+h), (0,255,0), 2)
 
-    if corners == 3:
-        shape_name = "Triangle"
-    elif corners == 4:
-        shape_name = "Rectangle"
-    elif corners == 5:
-        shape_name = "Pentagon"
-    elif corners > 5:
-        shape_name = "Circle"
-    else:
-        shape_name = "Unknown"
+    cv2.imshow("Face Detection", frames)
 
-    cv2.drawContours(image, [approx], 0, 0xfff, 3)
-    x = approx.ravel()[0]
-    y = approx.ravel()[1] - 10
-    cv2.putText(image, shape_name, (x,y), cv2.FONT_HERSHEY_SIMPLEX, 0.6, 0xfff, 5)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        print("quitting...")
+        break
 
-cv2.imshow("Countours image", image)
-cv2.waitKey(0)
+cap.release()
 cv2.destroyAllWindows()
