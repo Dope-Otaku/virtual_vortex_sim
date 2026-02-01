@@ -2,18 +2,11 @@ import cv2
 import numpy as np
 
 
-image = cv2.imread("pop_kaal.jpg")
-sharpened_kernel = np.array([
-    [0, -1, 0],
-    [-1, 5, -1],
-    [0, -1, 0]
-])
-sharepened_image = cv2.filter2D(image, -1, sharpened_kernel)
+image = cv2.imread("pop_kaal.jpg", cv2.IMREAD_GRAYSCALE)
 
-if image is None:
-    print("no image found")
+edges = cv2.Canny(image, 50, 150)
 
 cv2.imshow("original Image", image)
-cv2.imshow("blurred Image", sharepened_image)
+cv2.imshow("blurred Image", edges)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
