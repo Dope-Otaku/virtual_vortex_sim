@@ -1,5 +1,5 @@
 import cv2
-face_classifier = cv2.CascadeClassifier("haarcascade_frontalcatface.xml")
+face_classifier = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
 
 cap = cv2.VideoCapture(0)
 
@@ -9,7 +9,7 @@ while True:
 
     gray = cv2.cvtColor(frames, cv2.COLOR_BGR2GRAY)
 
-    detect_face = face_classifier.detectMultiScale(gray, 1.1, 5)
+    detect_face = face_classifier.detectMultiScale(gray, 1.1, 10)
 
     for (x, y, w, h) in detect_face:
         cv2.rectangle(frames, (x,y), (x+w, y+h), (0,255,0), 2)
