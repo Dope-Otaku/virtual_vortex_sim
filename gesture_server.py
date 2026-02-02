@@ -1,4 +1,6 @@
 import cv2
+import numpy as np
+from matplotlib import image
 import mediapipe as mp
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
@@ -10,7 +12,29 @@ base_options = python.BaseOptions(model_asset_path='hand_landmarker.task')
 model_options = vision.HandLandmarkerOptions(base_options=base_options, num_hands=2) #since we are using two hands that's why!
 model_detector = vision.HandLandmarker.create_from_options(model_options)
 
+# Testing with image file first
+test_image = mp.Image.create_from_file('tri.jpg')
 
+#anotating function
+def draw_landmarks_on_image(image, result):
+    annotated_image = np.copy(image)
+
+    if hasattr(detection_result, 'hand_landmarks'):
+        for hand_landmarks in detection_result.hand_landmarks:
+            for landmark in hand_landmarks.landmarks:
+                x = int(landmark.x * image.shape[1])
+                y = int(landmark.y * image.shape[0])
+                cv2.circle(annotated_image, (x, y), 5, (0, 255, 0), -1)
+    
+    return annotated_image
+
+
+
+detection_result = model_detector.detect(test_image)
+annotated_image = draw_landmarks_on_image(test_image.numpy_view(), detection_result)
+cv2.imshow("New Image",cv2.cvtColor(annotated_image, cv2.COLOR_RGB2BGR))
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 
 
 """
