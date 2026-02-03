@@ -19,12 +19,13 @@ test_image = mp.Image.create_from_file('tri.jpg')
 def draw_landmarks_on_image(image, result):
     annotated_image = np.copy(image)
 
+    hand_landmarks_list = detection_result.hand_landmarks
+
     if hasattr(detection_result, 'hand_landmarks'):
-        for hand_landmarks in detection_result.hand_landmarks:
-            for landmark in hand_landmarks.landmarks:
-                x = int(landmark.x * image.shape[1])
-                y = int(landmark.y * image.shape[0])
-                cv2.circle(annotated_image, (x, y), 5, (0, 255, 0), -1)
+        for landmark in range(len(hand_landmarks_list.landmarks)):
+            x = int(hand_landmarks_list[landmark].x * image.shape[1])
+            y = int(hand_landmarks_list[landmark].y * image.shape[0])
+            cv2.circle(annotated_image, (x, y), 5, (0, 255, 0), -1)
     
     return annotated_image
 
