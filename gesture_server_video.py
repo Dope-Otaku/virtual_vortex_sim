@@ -45,6 +45,9 @@ def get_finger_states(hand_landmarks):
         "pinky":  finger_up(hand_landmarks, 20, 18),
     }
 
+def thumb_up(hand_landmarks):
+    return hand_landmarks[4].x > hand_landmarks[3].x
+
 
 def draw_landmarks_on_video(video, result):
     annotated_video = video.copy()
@@ -94,8 +97,9 @@ while cap.isOpened():
         for hand_landmarks in detection_result.hand_landmarks:
 
             fingers = get_finger_states(hand_landmarks)
-
+            thumb = thumb_up(hand_landmarks)
             print({
+                "thumb": thumb,
                 **fingers
             })
 
