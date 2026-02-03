@@ -16,18 +16,28 @@ model_detector = vision.HandLandmarker.create_from_options(model_options)
 test_image = mp.Image.create_from_file('tri.jpg')
 
 #anotating function
+# def draw_landmarks_on_image(image, result):
+#     annotated_image = image.copy()
+#     if result.hand_landmarks:
+#         for hand_landmarks in result.hand_landmarks:
+#             for landmark in hand_landmarks.landmark:
+#                 x = int(landmark.x * image.shape[1])
+#                 y = int(landmark.y * image.shape[0])
+#                 cv2.circle(annotated_image, (x, y), 5, (0, 255, 0), -1)
+#     return annotated_image
+
 def draw_landmarks_on_image(image, result):
-    annotated_image = np.copy(image)
+    annotated_image = image.copy()
 
-    hand_landmarks_list = detection_result.hand_landmarks
+    if result.hand_landmarks:
+        for hand_landmarks in result.hand_landmarks:
+            for landmark in hand_landmarks:
+                x = int(landmark.x * image.shape[1])
+                y = int(landmark.y * image.shape[0])
+                cv2.circle(annotated_image, (x, y), 5, (0, 255, 0), -1)
 
-    if hasattr(detection_result, 'hand_landmarks'):
-        for landmark in range(len(hand_landmarks_list.landmarks)):
-            x = int(hand_landmarks_list[landmark].x * image.shape[1])
-            y = int(hand_landmarks_list[landmark].y * image.shape[0])
-            cv2.circle(annotated_image, (x, y), 5, (0, 255, 0), -1)
-    
     return annotated_image
+
 
 
 
