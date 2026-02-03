@@ -26,6 +26,26 @@ HAND_CONNECTIONS = [
     (0,17), (17,18), (18,19), (19,20)      # Pinky
 ]
 
+def finger_up(hand_landmarks, tip_idx, pip_idx):
+    """
+    Returns True if finger is extended (up)
+    """
+    tip = hand_landmarks[tip_idx]
+    pip = hand_landmarks[pip_idx]
+    return tip.y < pip.y
+
+def get_finger_states(hand_landmarks):
+    """
+    Returns dict of finger up/down states
+    """
+    return {
+        "index":  finger_up(hand_landmarks, 8, 6),
+        "middle": finger_up(hand_landmarks, 12, 10),
+        "ring":   finger_up(hand_landmarks, 16, 14),
+        "pinky":  finger_up(hand_landmarks, 20, 18),
+    }
+
+
 def draw_landmarks_on_video(video, result):
     annotated_video = video.copy()
     # HAND_CONNECTIONS = mp.solutions.hands.HAND_CONNECTIONS
@@ -69,6 +89,15 @@ while cap.isOpened():
         mp_image,
         timestamp
     )
+
+    if detection_result.hand_landmarks:
+        for hand_landmarks in detection_result.hand_landmarks:
+
+            fingers = get_finger_states(hand_landmarks)
+
+            print({
+                **fingers
+            })
 
     annotated = draw_landmarks_on_video(frame, detection_result)
 
