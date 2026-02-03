@@ -15,6 +15,24 @@ model_detector = vision.HandLandmarker.create_from_options(model_options)
 # Testing with image file first
 test_image = mp.Image.create_from_file('tri.jpg')
 
+#testing with live video feed from webcam
+live_feed = cv2.VideoCapture(1)
+_, frames = live_feed.read()
+
+# landmarks on video feed function
+def draw_landmarks_on_video(video, result):
+    annotated_video = video.copy()
+
+    if result.hand_landmarks:
+        for hand_landmarks in result.hand_landmarks:
+            for landmark in hand_landmarks:
+                x = int(landmark.x * video.shape[1])
+                y = int(landmark.y * video.shape[0])
+                cv2.circle(annotated_video, (x, y), 5, (0, 255, 0), -1)
+
+    return annotated_video
+
+
 #anotating function
 # def draw_landmarks_on_image(image, result):
 #     annotated_image = image.copy()
@@ -41,9 +59,12 @@ def draw_landmarks_on_image(image, result):
 
 
 
-detection_result = model_detector.detect(test_image)
-annotated_image = draw_landmarks_on_image(test_image.numpy_view(), detection_result)
-cv2.imshow("New Image",cv2.cvtColor(annotated_image, cv2.COLOR_RGB2BGR))
+# detection_result = model_detector.detect(test_image)
+detection_result = model_detector.detect(frames)
+# annotated_image = draw_landmarks_on_image(test_image.numpy_view(), detection_result)
+annotated_video = draw_landmarks_on_video(frames, detection_result)
+# cv2.imshow("New Image",cv2.cvtColor(annotated_image, cv2.COLOR_RGB2BGR))
+cv2.imshow("Live Feed",cv2.cvtColor(annotated_video, cv2.COLOR_BGR2RGB))
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 
