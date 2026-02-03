@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<body style="margin:0; background:black">
+
+<script type="module">
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js";
+
+const scene = new THREE.Scene()
+const camera = new THREE.PerspectiveCamera(75, innerWidth/innerHeight, 0.1, 1000)
+camera.position.z = 5
+
+const renderer = new THREE.WebGLRenderer({ antialias:true })
+renderer.setSize(innerWidth, innerHeight)
+document.body.appendChild(renderer.domElement)
+
+const light = new THREE.PointLight(0xffaa00, 2)
+light.position.set(5,5,5)
+scene.add(light)
+
+// Object
+const cube = new THREE.Mesh(
+  new THREE.BoxGeometry(),
+  new THREE.MeshStandardMaterial({ color: 0x00ffff })
+)
+scene.add(cube)
+
+let glow = false
+let spin = false
+
+// WebSocket
+const socket = new WebSocket("ws://127.0.0.1:8765")
+socket.onopen = () => console.log("✅ Connected to WebSocket server")
+socket.onclose = () => console.log("❌ Disconnected from WebSocket server")
+
+socket.onmessage = e => {
+  const { event } = JSON.parse(e.data)
+  if (event === "THUMBS_UP") glow = true
+  if (event === "INDEX_UP") spin = true
+  if (event === "NONE") { glow = false; spin = false }
+}
+
+function animate(){
+  requestAnimationFrame(animate)
+
+  if (spin) cube.rotation.y += 0.05
+
+  cube.material.emissiveIntensity = glow ? 1.5 : 0
+
+  renderer.render(scene,camera)
+}
+animate()
+</script>
+
+</body>
+</html>
