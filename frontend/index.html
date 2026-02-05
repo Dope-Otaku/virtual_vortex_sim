@@ -29,8 +29,8 @@ let spin = false
 
 // WebSocket
 const socket = new WebSocket("ws://127.0.0.1:8765")
-socket.onopen = () => console.log("✅ Connected to WebSocket server")
-socket.onclose = () => console.log("❌ Disconnected from WebSocket server")
+socket.onopen = () => console.log("Connected to WebSocket server ✅")
+socket.onclose = () => console.log("Disconnected from WebSocket server ❌")
 
 socket.onmessage = e => {
   const { event } = JSON.parse(e.data)
