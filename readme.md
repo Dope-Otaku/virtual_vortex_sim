@@ -3,7 +3,7 @@
 ## Tech Stack
 * [1] - Hand Tracking and Gestures
 *** [1a] - MediaPipe Hands --> done
-*** [1b] - python Gesture Logic
+*** [1b] - python Gesture Logic --> done
 
 * [2] - 3D Rendering
 *** [2a] - Web (Three.js)
