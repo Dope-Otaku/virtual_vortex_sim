@@ -47,6 +47,7 @@ def draw_landmarks_on_video(video, result):
 def draw_landmarks_on_image(image, result):
     annotated_image = image.copy()
 
+    # used a loop to go with each finger at once and then draw the landmarks
     if result.hand_landmarks:
         for hand_landmarks in result.hand_landmarks:
             for landmark in hand_landmarks:
