@@ -53,7 +53,7 @@ def draw_landmarks_on_image(image, result):
             for landmark in hand_landmarks:
                 x = int(landmark.x * image.shape[1])
                 y = int(landmark.y * image.shape[0])
-                cv2.circle(annotated_image, (x, y), 5, (0, 255, 0), -1)
+                cv2.circle(annotated_image, (x, y), 5, (0, 255, 0), -1) # Draw connections between landmarks
 
     return annotated_image
 
