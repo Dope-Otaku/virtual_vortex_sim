@@ -67,7 +67,7 @@ annotated_video = draw_landmarks_on_video(frames, detection_result)
 # cv2.imshow("New Image",cv2.cvtColor(annotated_image, cv2.COLOR_RGB2BGR))
 cv2.imshow("Live Feed",cv2.cvtColor(annotated_video, cv2.COLOR_BGR2RGB))
 cv2.waitKey(0)
-cv2.destroyAllWindows()
+cv2.destroyAllWindows() #destroying all windows
 
 
 """
