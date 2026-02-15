@@ -21,4 +21,4 @@
 - [] -> deactivate
 
 ### IMPORTANT: THIS PROJECT IS ON HOLD, CURRENTLY HAVE SOME ISSUES WITH PERSONAL LIFE WILL CONTINUE SOON..... 
-## [Last Commit: ```Created sub_index html page for other jutsu, still the 3d vortex not working properly!```]
+## [Last Commit: ```adding comments to the hardcoded part!```]
