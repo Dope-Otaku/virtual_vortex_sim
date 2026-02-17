@@ -23,4 +23,4 @@
 ### IMPORTANT: THIS PROJECT IS ON HOLD, CURRENTLY HAVE SOME ISSUES WITH PERSONAL LIFE WILL CONTINUE SOON..... 
 ## [Last Commit: ```adding comments to the hardcoded part!```]
 
-### new feature soon@ 
+### new feature soon @upcoming
