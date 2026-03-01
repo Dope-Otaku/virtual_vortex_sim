@@ -76,7 +76,7 @@ Old Code [Not - Working]
 
 
 
-# import cv2, mediapipe as mp, asyncio, websockets, json, math
+# import cv2, mediapipe as mp, asyncio, websockets, json, math #these are just basic modules
 
 # mp_hands = mp.solutions.hands
 # hands = mp_hands.Hands(max_num_hands=2)
