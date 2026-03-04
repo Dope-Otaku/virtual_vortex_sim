@@ -71,7 +71,7 @@ cv2.destroyAllWindows() #destroying all windows
 
 
 """
-Old Code [Not - Working] ||
+Old Code [Not - Working] |||
 """
 
 
